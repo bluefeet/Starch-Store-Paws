@@ -42,6 +42,16 @@ are being made in regards to API stability or quality of the software.
 Thus, this module also does not make any such promises.  Once Paws reaches
 version 1 this will change.
 
+=head1 SERIALIZATION
+
+Unlike L<Starch::Store::Amazon::DynamoDB> this module does not jump through
+a bunch of hoops to serialize only complex data structures, nor does it give
+you the ability to choose a serializer.
+
+Instead all data is serialized with L<JSON::MaybeXS>.  This makes things a
+lot simpler for tools written in other languages, or even just for humans
+looking at the raw records in DynamoDB.  It also simplifies the code.
+
 =head1 OPTIMIZATION
 
 You should probably run the following code as early as possible:
@@ -49,8 +59,8 @@ You should probably run the following code as early as possible:
     use Paws;
     Paws->default_config->immutable(1);
 
-This will ensure that you get the most run-time performance at a trade
-of minimal compile time from Paws.  See more at L<Paws/Optimization>.
+This will ensure that you get the most run-time performance, but with
+a small compile-time slow down.  See more at L<Paws/Optimization>.
 
 This module automatically preloads the C<PutItem>, C<GetItem>, and
 C<DeleteItem> methods of the L<Paws::DynamoDB> class.
